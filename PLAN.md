@@ -40,7 +40,7 @@ gq-party-streamliner/
 
 ## UI Mockups
 
-### Extension Popup (Email Configured)
+### Extension Popup (Default State - Works Out of the Box)
 
 ```
 ┌─────────────────────────────────────────┐
@@ -56,12 +56,12 @@ gq-party-streamliner/
 │                                         │
 │  Base Email                             │
 │  ┌─────────────────────────────────┐    │
-│  │ mark@greatquestion.co           │    │
+│  │ e4e@greatquestion.co            │    │
 │  └─────────────────────────────────┘    │
 │  Participant emails will look like:     │
-│  "mark+bright-falcon-42@greatquestion.co│
+│  "e4e+bright-falcon-42@greatquestion.co"│
 │                                         │
-│  ☑ Auto-submit forms                    │
+│  ☐ Auto-submit forms                    │
 │                                         │
 ├─────────────────────────────────────────┤
 │  ▼ URL Patterns                         │
@@ -76,64 +76,26 @@ gq-party-streamliner/
 └─────────────────────────────────────────┘
 ```
 
-### Extension Popup (Email Not Set - First Run)
-
-```
-┌─────────────────────────────────────────┐
-│  🧪 GQ Party Streamliner          [ON]  │
-├─────────────────────────────────────────┤
-│                                         │
-│  Name Prefix                            │
-│  ┌─────────────────────────────────┐    │
-│  │ Test                            │    │
-│  └─────────────────────────────────┘    │
-│  Participant names will look like:      │
-│  "Test bright-falcon-42"                │
-│                                         │
-│  Base Email  ⚠️ Required                 │
-│  ┌─────────────────────────────────┐    │
-│  │                                 │    │
-│  └─────────────────────────────────┘    │
-│  e.g. "mark@greatquestion.co" becomes   │
-│  "mark+bright-falcon-42@greatquestion.co│
-│                                         │
-│  ☐ Auto-submit forms (needs email)      │
-│                                         │
-├─────────────────────────────────────────┤
-│  ▶ URL Patterns (3 defaults)            │
-│                                         │
-└─────────────────────────────────────────┘
-```
-
-### Banner Injected on Form (When Email Not Set)
-
-```
-┌─────────────────────────────────────────────────┐
-│ ⚠️ Email not autofilled. [Open settings] to     │
-│    enable full auto-fill and auto-submit.    ✕  │
-└─────────────────────────────────────────────────┘
-```
-
 ### Form Page (After Auto-Fill)
 
 ```
 Your details
-┌───────────────────────────────────┐
-│ Test sunny-tiger-42               │  ← filled
-└───────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│ Test bright-falcon-42                   │  ← filled
+└─────────────────────────────────────────┘
 
 Email address
-┌───────────────────────────────────┐
-│ mark+sunny-tiger-42@gq.co         │  ← filled
-└───────────────────────────────────┘
+┌─────────────────────────────────────────┐
+│ e4e+bright-falcon-42@greatquestion.co   │  ← filled
+└─────────────────────────────────────────┘
 
 ☑ I understand that my data is stored...    ← checked
 ☑ I understand that I can request...        ← checked  
 ☑ I opt-in to being contacted...            ← checked
 
-┌───────────────────────────────────┐
-│         Confirm & book            │  ← auto-clicked
-└───────────────────────────────────┘    (if enabled)
+┌─────────────────────────────────────────┐
+│            Confirm & book               │  ← auto-clicked
+└─────────────────────────────────────────┘    (if enabled)
 ```
 
 ---
@@ -144,10 +106,10 @@ Email address
 
 Settings stored in `chrome.storage.sync`:
 
-- `namePrefix` - default: "Test" (works out of the box)
-- `baseEmail` - **required** - no default (e.g., "mark@greatquestion.co")
+- `namePrefix` - default: "Test"
+- `baseEmail` - default: "e4e@greatquestion.co"
   - Split into username/domain in code for constructing participant emails
-- `urlPatterns` - default patterns that work out of the box:
+- `urlPatterns` - default patterns:
   ```
   *://greatquestion.co/*/*/direct*
   *://greatquestion.co/*/*/bookings/new*
@@ -180,24 +142,10 @@ Human-readable format: `{adjective}-{noun}-{number}`
 
 When a matching form is detected:
 
-**If base email IS configured:**
-
 1. Fill name field: `{namePrefix} {randomString}` (e.g., "Test bright-falcon-42")
-2. Fill email field: `{username}+{randomString}@{domain}` (e.g., "mark+bright-falcon-42@greatquestion.co")
+2. Fill email field: `{username}+{randomString}@{domain}` (e.g., "e4e+bright-falcon-42@greatquestion.co")
 3. Check all consent checkboxes that aren't already checked
 4. If `autoSubmit` enabled, click the submit button immediately
-
-**If base email is NOT configured:**
-
-1. Fill name field only: `{namePrefix} {randomString}`
-2. Check consent checkboxes
-3. Inject a small dismissible banner at top of form:
-
-> "Email not autofilled. [Open extension settings](#) to enable full auto-fill."
-
-   - Clicking the link opens the extension popup via `chrome.runtime.openOptionsPage()` or similar
-
-4. Auto-submit is **disabled** (even if toggle is on) - user must manually submit
 
 ### 5. URL Pattern Matching
 
