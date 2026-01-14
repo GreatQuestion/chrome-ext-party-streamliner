@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GQ Party Streamliner</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="title-row">
+        <span class="icon">🧪</span>
+        <h1>GQ Party Streamliner</h1>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="enabled" checked>
+        <span class="slider"></span>
+      </label>
+    </header>
+
+    <main>
+      <div class="field">
+        <label for="namePrefix">Name Prefix</label>
+        <input type="text" id="namePrefix" placeholder="Test">
+        <p class="helper">Participant names will look like:<br><span class="preview" id="namePreview">"Test bright-falcon-42"</span></p>
+      </div>
+
+      <div class="field">
+        <label for="baseEmail">Base Email</label>
+        <input type="email" id="baseEmail" placeholder="e4e@greatquestion.co">
+        <p class="helper">Participant emails will look like:<br><span class="preview" id="emailPreview">"e4e+bright-falcon-42@greatquestion.co"</span></p>
+      </div>
+
+      <div class="field checkbox-field">
+        <label class="checkbox-label">
+          <input type="checkbox" id="autoSubmit">
+          <span>Auto-submit forms</span>
+        </label>
+      </div>
+
+      <details class="url-patterns">
+        <summary>URL Patterns <span class="pattern-count" id="patternCount">(3)</span></summary>
+        <div class="field">
+          <textarea id="urlPatterns" rows="5" placeholder="One pattern per line"></textarea>
+          <p class="helper">Use * as wildcard. One pattern per line.</p>
+        </div>
+      </details>
+    </main>
+
+    <footer>
+      <button id="saveBtn" class="save-btn">Save Settings</button>
+      <span class="status" id="status"></span>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
